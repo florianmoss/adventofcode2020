@@ -59,12 +59,8 @@ for x in arr:
    
     if pos<28:
         pos += 3
-    elif pos==28:
-        pos = 0
-    elif pos==29:
-        pos = 1
     else:
-        pos = 2
+        pos -= 28
 
 print("Day 3: {0}".format(count))
 
