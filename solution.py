@@ -42,11 +42,29 @@ import csv
 # Day 3
 # -------
 
-allLines = []
+
+arr = []
 
 with open('day3.csv', newline='') as data:
     reader = csv.DictReader(data)
     for row in reader:
-        allLines.append(row['data'])
-        print(row['data'])
+        arr.append(row['data'])
+
+pos = 0
+count = 0
+
+for x in arr:
+    if x[pos]=='#':
+        count_2 += 1
+   
+    if pos<28:
+        pos += 3
+    elif pos==28:
+        pos = 0
+    elif pos==29:
+        pos = 1
+    else:
+        pos = 2
+
+print(count)
 
