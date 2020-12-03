@@ -45,11 +45,12 @@ for line in allLines:
         count+=1
 
 count_2 = 0
+
 for line in allLines_2:
-    if int(line[1]) < len(line[4]):
-        if (line[4][int(line[0])] == line[2] or line[4][int(line[1])] == line[2]) \
-            and not \
-                (line[4][int(line[0])] == line[2] and line[4][int(line[1])] == line[2]):
+    low = int(line[0])
+    high = int(line[1])
+    if high <= len(line[4]) and low <= len(line[4]):
+        if (line[4][low-1] == line[2] or line[4][high-1] == line[2]) and not (line[4][low-1] == line[2] and line[4][high-1] == line[2]):
             count_2+=1
 
 print("Day 2 (a): {0}".format(count))
