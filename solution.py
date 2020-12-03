@@ -15,9 +15,16 @@ allLines.sort()
 for i in range(10):
     for j in range(len(allLines)):
         if (allLines[i] + allLines[j]) == 2020:
-            print("Day 1: {0}".format(allLines[i] * allLines[j]))
+            print("Day 1 (a): {0}".format(allLines[i] * allLines[j]))
 
+def day1_a():
+    for i in range(10):
+        for j in range(len(allLines)):
+            for k in range(len(allLines)):
+                if (allLines[i] + allLines[j] + allLines[k]) == 2020:
+                    return allLines[i] * allLines[j] * allLines[k]
 
+print("Day 1 (b): {0}".format(day1_a()))
 
 # -------
 # Day 2
@@ -50,17 +57,26 @@ with open('day3.csv', newline='') as data:
     for row in reader:
         arr.append(row['data'])
 
-pos = 0
-count = 0
 
-for x in arr:
-    if x[pos]=='#':
-        count += 1
+def day3_solver(right, down):
+    pos = 0
+    count = 0
+    for x in range(0, len(arr), down):
+        if arr[x][pos]=='#':
+            count += 1
    
-    if pos<28:
-        pos += 3
-    else:
-        pos -= 28
+        if pos<len(arr[x])-right:
+            pos += right
+        else:
+            pos -= (len(arr[x])-right)
+    return count
 
-print("Day 3: {0}".format(count))
+one = day3_solver(1, 1)
+three = day3_solver(3, 1)
+five = day3_solver(5, 1)
+seven = day3_solver(7, 1)
+one_2 = day3_solver(1, 2)
+
+print("Day 3 (a): {0}".format(day3_solver(3, 1)))
+print("Day 3 (b): {0}".format(one*three*five*seven*one_2))
 
