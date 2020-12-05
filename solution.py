@@ -3,6 +3,8 @@
 # -------
 
 import csv
+import re
+
 
 allLines = []
 
@@ -91,4 +93,49 @@ one_2 = day3_solver(1, 2)
 
 print("Day 3 (a): {0}".format(day3_solver(3, 1)))
 print("Day 3 (b): {0}".format(one*three*five*seven*one_2))
+
+
+# -------
+# Day 4
+# -------
+
+# import requests
+
+# SESSIONID= '<session_from_browser>'
+
+# r = requests.get('https://adventofcode.com/2020/day/4/input', cookies={'session': SESSIONID})
+# f= open("day4.txt","w")
+# f.write(r.text)
+
+attr = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
+data = open('day4.txt').read().replace('\n', ' ').split('  ')
+
+for item in data[:]:
+    for substr in attr:
+        if substr not in item: 
+            data.remove(item)  # this is done for part (b), it removes bad entries
+            break
+           
+print("Day 4 (a): {0}".format(len(data)))
+
+
+count = 0
+pattern_pid = '^[0-9]{9}$'
+pattern_hcl = '^#[0-9,a-f]{6}$'
+
+for item in data:
+    item = re.sub("\s+", ",", item.strip())
+    converted_data = (dict(u.split(":") for u in item.split(",")))
+
+    if ((converted_data['hgt'][-1] == 'm' and (150 <= int(converted_data['hgt'][:-2]) <= 193)) or \
+        (converted_data['hgt'][-1] == 'n' and (59 <= int(converted_data['hgt'][:-2]) <= 76))) and \
+        1920 <= int(converted_data['byr']) <= 2002 and \
+        2010 <= int(converted_data['iyr']) <= 2020 and \
+        2020 <= int(converted_data['eyr']) <= 2030 and \
+        converted_data['ecl'] in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'] and \
+        re.match(pattern_pid, converted_data['pid']) and \
+        re.match(pattern_hcl, converted_data['hcl']):
+                count += 1
+
+print("Day 4 (b): {0}".format(count))
 
