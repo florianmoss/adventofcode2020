@@ -4,7 +4,7 @@
 
 import csv
 import re
-
+from itertools import *
 
 allLines = []
 
@@ -12,21 +12,19 @@ with open('day1.csv', newline='') as data:
     reader = csv.DictReader(data)
     for row in reader:
         allLines.append(int(row['data'].strip()))
-allLines.sort()
 
-for i in range(10):
-    for j in range(len(allLines)):
-        if (allLines[i] + allLines[j]) == 2020:
-            print("Day 1 (a): {0}".format(allLines[i] * allLines[j]))
+all_combinations_a = list(combinations(allLines, 2))
+all_combinations_b = list(combinations(allLines, 3))
 
-def day1_a():
-    for i in range(10):
-        for j in range(len(allLines)):
-            for k in range(len(allLines)):
-                if (allLines[i] + allLines[j] + allLines[k]) == 2020:
-                    return allLines[i] * allLines[j] * allLines[k]
+def sums_to_2020(values):
+    return sum(values) == 2020
 
-print("Day 1 (b): {0}".format(day1_a()))
+result_a = list(filter(sums_to_2020, all_combinations_a))
+result_b = list(filter(sums_to_2020, all_combinations_b))
+
+print("Day 1 (a): {0}".format(result_a))
+print("Day 1 (b): {0}".format(result_b))
+
 
 # -------
 # Day 2
