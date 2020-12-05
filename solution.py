@@ -139,3 +139,31 @@ for item in data:
 
 print("Day 4 (b): {0}".format(count))
 
+
+# -------
+# Day 5
+# -------
+
+arr = []
+
+with open('day5.csv', newline='') as data:
+    reader = csv.DictReader(data)
+    for row in reader:
+        arr.append(row['data'].replace("F", "0").replace("B", "1").replace("L", "0").replace("R", "1"))
+
+arr.sort()
+
+seats = [0, 1, 2, 3, 4, 5, 6, 7]
+pos = int(arr[0][7:], 2)
+
+print("Day 5 (a): The last value: {0}-{1}".format(int(arr[len(arr)-1][:7], 2), int(arr[len(arr)-1][7:], 2)))
+
+for i in arr:
+    if int(i[7:], 2) == seats[pos]:
+        if pos == 7:
+            pos = 0
+        else:
+            pos += 1
+    else:
+        print("Day 5 (b): The value before : {0}-{1}".format(int(i[:7], 2), int(i[7:], 2)))
+        break
