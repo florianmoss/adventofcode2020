@@ -15,7 +15,7 @@ Solution for (a) is pretty basic, iterate over item and check that the `letter` 
 ## Day 3
 How many `#` are hit while iterating the input. I simply loop over it and define the steps for `down` and `sideways`. Simply check when the right boarder is hit and reset to the left and count the `#`s along the way.
 
-# Day 4
+## Day 4
 Practicing regular expressions! Just to annoy Murph, I chose to use 2 loops for (a). The loops are just checking if all the required attributes are present in each line. I also removed all missing entries from the list, the list size is the solution.
 
 With the clean data at hand, the only thing to do is to iterate over it and check all the conditions. I created a dictionary (hashmap) for each entry and then used regular expressions and simple integer comparisons to find correct entries.
