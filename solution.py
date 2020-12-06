@@ -1,10 +1,14 @@
+# Variables and Imports
+
+# SESSIONID= '<session_from_browser>'
+import csv
+import re
+import requests
+from itertools import *
+
 # -------
 # Day 1
 # -------
-
-import csv
-import re
-from itertools import *
 
 allLines = []
 
@@ -31,27 +35,27 @@ print("Day 1 (b): {0}".format(result_b))
 # -------
 
 allLines = []
-allLines_2 = []
+
 count = 0
+count_2 = 0
 
 with open('day2.csv', newline='') as data:
     reader = csv.DictReader(data)
     for row in reader:
         allLines.append(row['data'].strip().replace('-', ' ').replace(':', ' ').split(' '))
-        allLines_2.append(row['data'].strip().replace('-', ' ').replace(':', ' ').split(' '))
 
 for line in allLines:
-    if int(line[0]) <= line[4].replace(line[2], '1').count('1') <= int(line[1]):
+    if int(line[0]) <= line[4].count(line[2]) <= int(line[1]):
         count+=1
-
-count_2 = 0
-
-for line in allLines_2:
     low = int(line[0])
     high = int(line[1])
     if high <= len(line[4]) and low <= len(line[4]):
-        if (line[4][low-1] == line[2] or line[4][high-1] == line[2]) and not (line[4][low-1] == line[2] and line[4][high-1] == line[2]):
+        if (line[4][low-1] == line[2] or line[4][high-1] == line[2]) \
+            and not (line[4][low-1] == line[2] \
+                and line[4][high-1] == line[2]):
             count_2+=1
+
+
 
 print("Day 2 (a): {0}".format(count))
 print("Day 2 (b): {0}".format(count_2))
@@ -96,10 +100,6 @@ print("Day 3 (b): {0}".format(one*three*five*seven*one_2))
 # -------
 # Day 4
 # -------
-
-# import requests
-
-# SESSIONID= '<session_from_browser>'
 
 # r = requests.get('https://adventofcode.com/2020/day/4/input', cookies={'session': SESSIONID})
 # f= open("day4.txt","w")
@@ -150,18 +150,12 @@ with open('day5.csv', newline='') as data:
         arr.append(row['data'].replace("F", "0").replace("B", "1").replace("L", "0").replace("R", "1"))
 
 arr.sort()
-
-seats = [0, 1, 2, 3, 4, 5, 6, 7]
-pos = int(arr[0][7:], 2)
-
 print("Day 5 (a): The last value: {0}-{1}".format(int(arr[len(arr)-1][:7], 2), int(arr[len(arr)-1][7:], 2)))
 
+last_val = int(arr[1][7:], 2)
 for i in arr:
-    if int(i[7:], 2) == seats[pos]:
-        if pos == 7:
-            pos = 0
-        else:
-            pos += 1
+    if (int(i[7:], 2) + last_val) % 2 == 1:
+        last_val = int(i[7:], 2)
     else:
         print("Day 5 (b): The value before : {0}-{1}".format(int(i[:7], 2), int(i[7:], 2)))
         break
